@@ -72,8 +72,8 @@
       <nav class="col-md-3 col-lg-2 d-md-block sidebar">
         <div class="position-sticky">
           <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Profile</a></li>
+            <li class="nav-item"><a href="{{url("getdata")}}" class="nav-link">DATA</a></li>
+            <li class="nav-item"><a href="{{url('addtable')}}" class="nav-link">ADDDATA</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Settings</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
           </ul>

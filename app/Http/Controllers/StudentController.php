@@ -4,35 +4,100 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
-use Illuminate\Support\Facades\DB; // <-- Add this line
+use Illuminate\Support\Facades\DB; 
 
 class StudentController extends Controller
 {
-    public function index(){
-        $items = DB::table('student')->get();
-         return $items;
+    public function index(Request $request)
+    {
         
-        // ... now you can use $items ...
-    }
-    public function adddata(){
-        $data = DB::table('student') ->insert
-        ([
-            'name'=>'gayathri',
-            'email'=>'gayi@example.com',
-            'branch' =>'cai',
-            'phone'=>'2323232323',
-        ]);
-        return "add successfully";
+    $items = DB::table('student')
+        ->when($request->search, function ($query) use ($request) {
+            $search = $request->search;
+            return $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%{$search}%")
+                  ->orWhere('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('branch', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            });
+        })
+        ->paginate(5)
+        ->appends($request->all()); 
+
+    return view('dataview', compact('items'));
+        
+        
     }
 
-    public function deletedata(){
-        $data = DB::table("student")->where('id',1) ->delete();
-        return 'deleted';
+
+
+
+
+
+
+    public function addtable(){
+        return view('addview');
     }
+
+
+
+
+
+
+    public function adddata(Request $request){
+ 
+    $request->validate([
+        'name'   => 'required',
+        'email'  => 'required',
+        'branch' => 'required',
+        'phone'  => 'required',
+    ]);
+
+   
+    DB::table('student')->insert([
+        'name'   => $request->name,
+        'email'  => $request->email,
+        'branch' => $request->branch,
+        'phone'  => $request->phone,
+    ]);
+
     
-    public function update(){
-        $data =DB::table('student')->where('id','2')->update(['name'=>'priya']);
-        return 'update';
+     return redirect()->route('getdata');
+    
+}
 
+
+
+
+
+
+
+    public function deletedata($id){
+        $data = DB::table("student")->where('id',$id) ->delete();
+        return redirect()->route('getdata');
+    }
+
+
+
+
+
+    public function updtable($id){
+        $item = DB::table('student')->where('id', $id)->first();
+        return view('tableforupdate', compact('item')); 
+    }
+
+   
+    public function update(Request $request,$id){
+        DB::table('student')
+            ->where('id', $request->id)
+            ->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'branch' => $request->branch,
+                'phone' => $request->phone,
+            ]);
+
+        return redirect()->route('getdata'); 
     }
 }

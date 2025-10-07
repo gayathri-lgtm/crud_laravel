@@ -16,8 +16,17 @@ Route::get('/contact', function () {
 })->name('/contact');
 
 
-Route::get("getdata",[StudentController::class,"index"])->name("");
-Route::get("adddata",[StudentController::class,"adddata"])->name("");
-Route::get("deletedata",[StudentController::class,"deletedata"])->name("");
-Route::get("update",[StudentController::class,"update"])->name("");
+Route::get("getdata",[StudentController::class,"index"])->name("getdata");
+
+
+
+Route::get("addtable",[StudentController::class,"addtable"])->name("addtable");
+Route::post("adddata",[StudentController::class,"adddata"])->name("adddata");
+
+
+Route::get("deletedata/{id}",[StudentController::class,"deletedata"])->name("deletedata");
+
+
+Route::get("updtable/{id}",[StudentController::class,"updtable"])->name("updtable");
+Route::post("update/{id}",[StudentController::class,"update"])->name("update");
 
