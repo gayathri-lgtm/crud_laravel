@@ -1,4 +1,4 @@
-@extends('layout/body')
+@extends('layout.body')
 
 @section('title','contact')
 @section('content')
@@ -27,11 +27,13 @@
                 <th>Phone</th>
               
                 <th>Action</th> 
+                <th>image</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($items as $item)
             <tr>
+                
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->email }}</td>
@@ -39,6 +41,16 @@
                 <td>{{ $item->phone }}</td>
                 <td><a href="{{url('updtable',$item->id)}}"><button>edit</button></a>
                     <a href="{{url('deletedata',$item->id)}}"><button>del</button></a>
+                </td>
+                <td>
+                    
+    @if($item->image)
+        <img src="{{ asset('storage/' . $item->image) }}" alt="Uploaded Image" class="img-thumbnail" width="50  ">
+    @endif
+</td>
+
+
+           
                 </td>
                
             </tr>

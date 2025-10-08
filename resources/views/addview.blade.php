@@ -1,11 +1,11 @@
-@extends('layout/body')
+@extends('layout.body')
 
 @section('title','addview')
 @section('content')
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Add Student</h2>
 
-    <form action="{{ url('adddata') }}" method="POST" class="mx-auto" style="max-width: 500px;" method="post">
+    <form action="{{ url('adddata') }}" method="POST" class="mx-auto" style="max-width: 500px;" enctype="multipart/form-data">
         @csrf <!-- Don't forget CSRF token for POST -->
 
         <div class="mb-3">
@@ -27,6 +27,11 @@
             <label for="phone" class="form-label">Phone</label>
             <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter phone number">
         </div>
+
+       <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    </div>
 
         <button type="submit" class="btn btn-primary w-100">Submit</button>
 @endsection()

@@ -52,14 +52,16 @@ class StudentController extends Controller
         'email'  => 'required',
         'branch' => 'required',
         'phone'  => 'required',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif',
     ]);
 
-   
+     $path = $request->file('image')->store('images', 'public');
     DB::table('student')->insert([
         'name'   => $request->name,
         'email'  => $request->email,
         'branch' => $request->branch,
         'phone'  => $request->phone,
+        'image'  => $path,
     ]);
 
     

@@ -1,4 +1,4 @@
-@extends('layout/body')
+@extends('layout.body')
 
 @section('title','about' )
 
